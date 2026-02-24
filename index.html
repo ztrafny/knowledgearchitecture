@@ -3,67 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Architecture</title>
+    <title>KA — Knowledge Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --color-ink: #1a1a1a;
+            --color-muted: #6b6b6b;
+            --color-faint: #a8a8a8;
+            --color-surface: #faf9f7;
+            --color-rule: #e2e0dc;
+            --color-accent: #2d5a3d;
+            --font-display: 'DM Serif Display', Georgia, serif;
+            --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            font-family: var(--font-body);
+            color: var(--color-ink);
+            background-color: var(--color-surface);
             line-height: 1.6;
-            color: #333;
-            background: #fff;
+            -webkit-font-smoothing: antialiased;
         }
 
-        header {
-            padding: 4rem 2rem;
-            text-align: center;
-            background: #1a1a2e;
-            color: #fff;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.85;
-        }
-
-        main {
-            max-width: 800px;
+        .container {
+            max-width: 640px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 0 1.5rem;
         }
 
-        main p {
-            font-size: 1.1rem;
+        /* ——— Nav ——— */
+        nav {
+            padding: 2rem 0;
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wordmark {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            letter-spacing: 0.06em;
+            color: var(--color-ink);
+            text-decoration: none;
+        }
+
+        .wordmark-sub {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-faint);
+            margin-left: 0.6rem;
+        }
+
+        .nav-link {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-muted);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            border-bottom: 1.5px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--color-ink);
+            border-bottom-color: var(--color-ink);
+        }
+
+        /* ——— Hero ——— */
+        .hero {
+            padding: 6rem 0 5rem;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 0.15s forwards;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+            max-width: 520px;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--color-muted);
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        /* ——— Divider ——— */
+        .rule {
+            border: none;
+            border-top: 1px solid var(--color-rule);
+        }
+
+        /* ——— Case Study ——— */
+        .case-study {
+            padding: 4rem 0;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 0.3s forwards;
+        }
+
+        .case-study-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-faint);
             margin-bottom: 1.5rem;
         }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: #888;
+        .case-study h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .case-study p {
+            color: var(--color-muted);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .outcome {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-accent);
+            letter-spacing: 0.01em;
+        }
+
+        /* ——— CTA ——— */
+        .cta {
+            padding: 4rem 0 5rem;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 0.45s forwards;
+        }
+
+        .cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            color: var(--color-muted);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-block;
+            font-family: var(--font-body);
             font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-surface);
+            background-color: var(--color-ink);
+            text-decoration: none;
+            padding: 0.85rem 2rem;
+            border-radius: 4px;
+            transition: background-color 0.2s, transform 0.15s;
+        }
+
+        .cta-button:hover {
+            background-color: #333;
+            transform: translateY(-1px);
+        }
+
+        /* ——— Footer ——— */
+        footer {
+            border-top: 1px solid var(--color-rule);
+            padding: 2rem 0;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 0.6s forwards;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--color-faint);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--color-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-ink);
+        }
+
+        /* ——— Animation ——— */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ——— Responsive ——— */
+        @media (max-width: 600px) {
+            html { font-size: 16px; }
+
+            .hero { padding: 4rem 0 3.5rem; }
+
+            .hero h1 { font-size: 2.2rem; }
+
+            .wordmark-sub { display: none; }
+
+            .case-study { padding: 3rem 0; }
+
+            .cta { padding: 3rem 0 4rem; }
+
+            .cta h2 { font-size: 1.5rem; }
+
+            footer .container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Knowledge Architecture</h1>
-        <p>Coming soon</p>
-    </header>
-    <main>
-        <p>Welcome to Knowledge Architecture.</p>
-    </main>
+
+    <!-- Nav -->
+    <nav>
+        <div class="container">
+            <div>
+                <a href="#" class="wordmark">KA</a>
+                <span class="wordmark-sub">Knowledge Architecture</span>
+            </div>
+            <a href="#contact" class="nav-link">Get in touch</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Your expertise, architected into software.</h1>
+            <p>KA partners with subject matter experts to turn specialized domain knowledge into custom software tools for underserved markets.</p>
+        </div>
+    </section>
+
+    <div class="container"><hr class="rule"></div>
+
+    <!-- Case Study -->
+    <section class="case-study">
+        <div class="container">
+            <div class="case-study-label">Case Study</div>
+            <h2>Loan Decoder</h2>
+            <p>Federal student loan data is dense and buried in formats that aren't built for analysis. We partnered with a student loan consulting firm to build a tool that parses borrower data into clean, actionable reports — replacing hours of manual work with a few clicks.</p>
+            <span class="outcome">Built and delivered to Student Loan Tutor LLC →</span>
+        </div>
+    </section>
+
+    <div class="container"><hr class="rule"></div>
+
+    <!-- CTA -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Have a problem that needs software?</h2>
+            <p>If you've got deep expertise in a domain and a workflow that's begging to be automated, we'd like to hear about it.</p>
+            <a href="mailto:knowledgearchco@gmail.com" class="cta-button">Tell us about it</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        &copy; 2026 Knowledge Architecture
+        <div class="container">
+            <span class="footer-copy">&copy; 2026 Knowledge Architecture</span>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/zac-trafny-7681b568/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+        </div>
     </footer>
+
 </body>
 </html>

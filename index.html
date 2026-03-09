@@ -186,13 +186,87 @@
             background-color: var(--color-ink);
             text-decoration: none;
             padding: 0.85rem 2rem;
+            border: none;
             border-radius: 4px;
+            cursor: pointer;
             transition: background-color 0.2s, transform 0.15s;
         }
 
         .cta-button:hover {
             background-color: #333;
             transform: translateY(-1px);
+        }
+
+        /* ——— Form ——— */
+        .contact-form {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            max-width: 480px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .form-field label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--color-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .form-field input,
+        .form-field textarea {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--color-ink);
+            background: #fff;
+            border: 1px solid var(--color-rule);
+            border-radius: 4px;
+            padding: 0.7rem 0.85rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--color-ink);
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .form-row .form-field {
+            flex: 1;
+        }
+
+        .form-submit {
+            margin-top: 0.5rem;
+            align-self: flex-start;
+        }
+
+        .form-status {
+            font-size: 0.9rem;
+            color: var(--color-accent);
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
         }
 
         /* ——— Footer ——— */
@@ -307,7 +381,28 @@
         <div class="container">
             <h2>Have a problem that needs software?</h2>
             <p>If you've got deep expertise in a domain and a workflow that's begging to be automated, we'd like to hear about it.</p>
-            <a href="mailto:knowledgearchco@gmail.com" class="cta-button">Tell us about it</a>
+            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contact-form">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="company">Company <span style="color: var(--color-faint); font-weight: 400;">(optional)</span></label>
+                    <input type="text" id="company" name="company">
+                </div>
+                <div class="form-field">
+                    <label for="message">Tell us about your problem</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="cta-button form-submit">Send message</button>
+                <p class="form-status" id="form-status">Thanks! We'll be in touch soon.</p>
+            </form>
         </div>
     </section>
 
@@ -320,6 +415,33 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const form = document.getElementById('contact-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const status = document.getElementById('form-status');
+            const data = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(function(response) {
+                if (response.ok) {
+                    status.style.display = 'block';
+                    form.reset();
+                } else {
+                    status.textContent = 'Something went wrong. Please email us directly.';
+                    status.style.color = '#c0392b';
+                    status.style.display = 'block';
+                }
+            }).catch(function() {
+                status.textContent = 'Something went wrong. Please email us directly.';
+                status.style.color = '#c0392b';
+                status.style.display = 'block';
+            });
+        });
+    </script>
 
 </body>
 </html>
